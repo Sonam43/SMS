@@ -1,43 +1,23 @@
-// database.js
-
-require('dotenv').config(); // Load .env variables
-
+// config/database.js
 const { Sequelize } = require('sequelize');
 
-let sequelize;
-
-if (process.env.DB_DIALECT === 'postgres') {
-  // PostgreSQL configuration (e.g., for Render)
-  sequelize = new Sequelize(
-    process.env.DB_NAME,        // Database name
-    process.env.DB_USER,        // Username
-    process.env.DB_PASSWORD,    // Password
-    {
-      host: process.env.DB_HOST,         // Hostname (e.g., db.render.com)
-      port: process.env.DB_PORT || 5432, // Default PostgreSQL port
-      dialect: 'postgres',
-      logging: false,
-      dialectOptions: {
-        ssl: {
-          require: true,
-          rejectUnauthorized: false // Required for Render self-signed SSL certs
-        }
-      },
-      pool: {
-        max: 5,
-        min: 0,
-        acquire: 30000,
-        idle: 10000
+// Use environment variables from Render
+const sequelize = new Sequelize(
+  process.env.DB_NAME,     // Database name
+  process.env.DB_USER,     // Database user
+  process.env.DB_PASSWORD, // Database password
+  {
+    host: process.env.DB_HOST,     // Host (e.g. from Render dashboard)
+    port: process.env.DB_PORT || 5432,
+    dialect: 'postgres',
+    dialectOptions: {
+      ssl: {
+        require: true,
+        rejectUnauthorized: false // Important for Render-hosted PostgreSQL
       }
-    }
-  );
-} else {
-  // SQLite configuration for local development
-  sequelize = new Sequelize({
-    dialect: 'sqlite',
-    storage: process.env.DB_STORAGE || './database.sqlite',
-    logging: false
-  });
-}
+    },
+    logging: false, // optional: disable SQL query logging
+  }
+);
 
 module.exports = sequelize;

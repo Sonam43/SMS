@@ -1,9 +1,7 @@
 require('dotenv').config(); // Load environment variables from .env
 const express = require('express');
 const session = require('express-session');
-const pgSession = require('connect-pg-simple')(session);
 const path = require('path');
-const { Pool } = require('pg');
 const sequelize = require('./config/database');
 const Gallery = require('./models/gallery');
 
@@ -13,37 +11,24 @@ const app = express();
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json()); // To support JSON-encoded bodies
 app.use(express.static(path.join(__dirname, 'public')));
+
+// Serve uploaded images
 app.use('/uploads', express.static(path.join(__dirname, 'public/uploads')));
 
-// ======== Session setup for Render/PostgreSQL ========
+// ======== Session setup ========
 app.use(
   session({
-    store: new pgSession({
-      pool: new Pool({
-        host: process.env.DB_HOST,
-        port: process.env.DB_PORT || 5432,
-        user: process.env.DB_USER,
-        password: process.env.DB_PASSWORD,
-        database: process.env.DB_NAME,
-        ssl: process.env.DB_SSL === 'true' ? { rejectUnauthorized: false } : false,
-      }),
-      tableName: 'session',
-    }),
     secret: process.env.SESSION_SECRET || 'default_secret',
     resave: false,
     saveUninitialized: false,
-    cookie: {
-      secure: process.env.NODE_ENV === 'production', // true on Render
-      maxAge: 24 * 60 * 60 * 1000, // 1 day
-    },
   })
 );
 
-// ======== EJS View Engine ========
+// ======== Set EJS as the view engine ========
 app.set('view engine', 'ejs');
 app.set('views', path.join(__dirname, 'views'));
 
-// ======== Routes ========
+// ======== Route Imports ========
 const authRoutes = require('./routes/authRoutes');
 const pageRoutes = require('./routes/pageRoutes');
 const membershipRoutes = require('./routes/membershipRoutes');
@@ -53,6 +38,7 @@ const galleryRoutes = require('./routes/galleryRoutes');
 const adminRoutes = require('./routes/adminRoutes');
 const upload = require('./middleware/upload');
 
+// ======== Route Registration ========
 app.use('/', pageRoutes);
 app.use('/', authRoutes);
 app.use('/', membershipRoutes);
@@ -61,20 +47,25 @@ app.use('/', feedbackRoutes);
 app.use('/', galleryRoutes);
 app.use('/', adminRoutes);
 
-// ======== Admin Gallery View ========
+// ======== Remove Duplicate Static Admin Render (Handled in Controller) ========
+// app.get('/adminnews', (req, res) => {
+//   res.render('adminnews');
+// });
+
+// Admin gallery routes
 app.get('/admingallery', async (req, res) => {
   try {
     const images = await Gallery.findAll({
-      order: [['createdAt', 'DESC']],
+      order: [['created_at', 'DESC']]
     });
     res.render('gallery', { images });
   } catch (err) {
-    console.error('Sequelize error:', err);
+    console.error('Sequelize error:', err); // 🔥 This line will print the actual issue
     res.status(500).send('Database error');
   }
 });
 
-// ======== Image Upload Handler ========
+// Handle image upload route
 app.post('/upload-image', upload.single('image'), async (req, res) => {
   try {
     if (!req.file) {
@@ -82,17 +73,22 @@ app.post('/upload-image', upload.single('image'), async (req, res) => {
       return res.status(400).send('No file uploaded');
     }
 
-    const imageUrl = `/uploads/${req.file.filename}`;
-    await Gallery.create({ image_url: imageUrl });
+    const imageUrl = `/uploads/${req.file.filename}`; // this should NOT be null
 
-    res.redirect('/gallery');
+    // Save to DB
+    await Gallery.create({
+      image_url: imageUrl
+    });
+
+    res.redirect('/gallery'); // or wherever you want
   } catch (err) {
     console.error('Error saving image:', err);
     res.status(500).send('Error saving image');
   }
 });
 
-// ======== About Us Page ========
+
+// About Us page
 app.get('/about-us', async (req, res) => {
   try {
     const images = await Gallery.findAll({
@@ -105,13 +101,12 @@ app.get('/about-us', async (req, res) => {
     res.status(500).send('Server error');
   }
 });
-
-// ======== Sync DB and Start Server ========
-sequelize.sync({ alter: true }) // Change to `alter: false` in production for stability
+// ======== Sync Database and Start Server ========
+sequelize.sync({ alter: true }) // use alter: true in dev, switch to false in production
   .then(() => {
-    const port = process.env.PORT || 3000;
-    app.listen(port, () => {
-      console.log(`Server running at http://localhost:${port}`);
+    console.log('Database synced successfully');
+    app.listen(3000, () => {
+      console.log('Server running at http://localhost:3000');
     });
   })
   .catch((err) => {

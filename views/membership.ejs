@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Registration - Sherubtse Media Society</title>
+    <link rel="stylesheet" href="/css/membership.css">
+</head>
+<body>
+    <!-- Header -->
+  <header>
+  <div class="logo-container">
+      <img src="/images/logo1.png" alt="Sherubtse Media Society Logo" class="logo-img">
+      <h1 class="site-title">Sherubtse Media Society</h1>
+    </div>
+  <button class="menu-toggle" aria-label="Toggle navigation">☰</button>
+  <nav class="nav-links">
+      <a href="/home">Home</a>
+      <a href="/aboutus">About Us</a>
+      <a href="/membership">Membership</a>
+      <a href="/news">News</a>
+      <a href="/contactus">Contact Us</a>
+      <a href="/logout" class="logout">Logout</a>     
+  </nav>
+</header>
+
+    <div class="registration-container">
+        <div class="registration-form">
+            <div class="form-logo">
+                <img src="/images/logo1.png" alt="SMS Logo">
+            </div>
+            <h2>Registration Form for Sherubtse Media Society (SMS)</h2>
+            
+            <form action="/membership" method="POST">
+                <input type="hidden" name="from" value="<%= from %>">
+
+                <div class="form-group">
+                    <label for="fullName">name:</label>
+                    <input type="text" id="name" name="name" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="studentId">Student ID:</label>
+                    <input type="text" id="studentId" name="studentId" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="course">Course:</label>
+                    <select id="course" name="course" required>
+                        <option value="">Select Course</option>
+                        <option value="DSDA">DSDA</option>
+                        <option value="DCPM">DCPM</option>
+                        <option value="EPS">EPS</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label for="year">Year:</label>
+                    <select id="year" name="year" required>
+                        <option value="">Select Year</option>
+                        <option value="1">First Year</option>
+                        <option value="2">Second Year</option>
+                        <option value="3">Third Year</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label for="email">Email Address:</label>
+                    <input type="email" id="email" name="email" placeholder="example@domain.com" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="gender">Gender:</label>
+                    <select id="gender" name="gender" required>
+                        <option value="">Select Gender</option>
+                        <option value="Male">Male</option>
+                        <option value="Female">Female</option>
+                        <option value="Other">Other</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label for="contactNumber">Contact Number:</label>
+                    <input type="tel" id="contactNumber" name="contactNumber" placeholder="17XXXXXX or 77XXXXXX" required>
+                </div>
+
+                <button type="submit" class="submit-btn">Submit</button>
+            </form>
+        </div>
+    </div>
+
+  <footer class="footer">
+  <div class="footer-container">
+    <!-- Contact Us -->
+    <div class="footer-column contact">
+      <h4>Contact Us</h4>
+      <p>Visit us at Sherubtse College, Bhutan</p>
+      <p>Email:</p>
+      <p>Phone: +975-17123456</p>
+    </div>
+
+    <!-- Follow Us -->
+    <div class="footer-column follow">
+      <h4>Follow Us</h4>
+      <a href="https://www.facebook.com/SherubtseMediaSociety" target="_blank">
+        <img src="/Images/facebook.png" alt="Facebook" class="social-icon">
+      </a>
+      <a href="https://www.tiktok.com/@smsuo875677?lang=en" target="_blank">
+        <img src="/Images/tiktok.png" alt="TikTok" class="social-icon">
+      </a>
+      <a href="https://www.youtube.com/@SherubtseMediaSociety" target="_blank">
+        <img src="/Images/youtube.png" alt="YouTube" class="social-icon youtube-icon">
+      </a>
+    </div>
+
+    <!-- Quick Links -->
+    <div class="footer-column links">
+      <h4>Quick Links</h4>
+      <p><a href="/aboutus">About Us</a></p>
+      <p><a href="#">SMS Constitution</a></p>
+      <p><a href="#">News</a></p>
+    </div>
+  </div>
+
+  <div class="footer-bottom">
+    © 2024 Sherubtse Media Society. All rights reserved.
+  </div>
+</footer>
+
+    <script>
+    const toggleButton = document.querySelector('.menu-toggle');
+    const navLinks = document.querySelector('.nav-links');
+
+    toggleButton.addEventListener('click', () => {
+      navLinks.classList.toggle('show');
+    });
+  </script>
+</body>
+</html>

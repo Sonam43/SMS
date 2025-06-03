@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>News - Sherubtse Media Society</title>
+    <link rel="stylesheet" href="/css/news.css">
+</head>
+<body>
+    <div class="page-container">
+        <!-- Header -->
+  <header>
+    <div class="logo-container">
+      <img src="/images/logo1.png" alt="Sherubtse Media Society Logo" class="logo-img">
+      <h1 class="site-title">Sherubtse Media Society</h1>
+    </div>
+    <button class="menu-toggle" aria-label="Toggle navigation">☰</button>
+  <nav class="nav-links">
+      <a href="/home">Home</a>
+      <a href="/aboutus">About Us</a>
+      <a href="/membership">Membership</a>
+      <a href="/news">News</a>
+      <a href="/contactus">Contact Us</a>
+      <a href="/logout" class="logout">Logout</a>     
+    </nav>
+  </header>
+
+        <!-- Main Content -->
+        <main class="news-container">
+            <h1 class="news-title">NEWS</h1>
+            
+            <div class="news-grid">
+                <!-- Loop through the newsList array -->
+                <% newsList.forEach(news => { %>
+                    <div class="news-card">
+                        <img src="<%= news.imageUrl %>" alt="<%= news.title %>">
+                        <div class="news-content">
+                            <h3><%= news.title %></h3>
+                            <p><%= news.content %></p>
+                            <small><%= new Date(news.date).toLocaleDateString() %></small>
+                        </div>
+                    </div>
+                <% }) %>
+            </div>
+        </main>
+
+    <footer class="footer">
+  <div class="footer-container">
+    <!-- Contact Us -->
+    <div class="footer-column contact">
+      <h4>Contact Us</h4>
+      <p>Visit us at Sherubtse College, Bhutan</p>
+      <p>Email:</p>
+      <p>Phone: +975-17123456</p>
+    </div>
+
+    <!-- Follow Us -->
+    <div class="footer-column follow">
+      <h4>Follow Us</h4>
+      <a href="https://www.facebook.com/SherubtseMediaSociety" target="_blank">
+        <img src="/Images/facebook.png" alt="Facebook" class="social-icon">
+      </a>
+      <a href="https://www.tiktok.com/@smsuo875677?lang=en" target="_blank">
+        <img src="/Images/tiktok.png" alt="TikTok" class="social-icon">
+      </a>
+      <a href="https://www.youtube.com/@SherubtseMediaSociety" target="_blank">
+        <img src="/Images/youtube.png" alt="YouTube" class="social-icon youtube-icon">
+      </a>
+    </div>
+
+    <!-- Quick Links -->
+    <div class="footer-column links">
+      <h4>Quick Links</h4>
+      <p><a href="/aboutus">About Us</a></p>
+      <p><a href="#">SMS Constitution</a></p>
+      <p><a href="#">News</a></p>
+    </div>
+  </div>
+
+  <div class="footer-bottom">
+    © 2024 Sherubtse Media Society. All rights reserved.
+  </div>
+</footer>
+
+    <script>
+    const toggleButton = document.querySelector('.menu-toggle');
+    const navLinks = document.querySelector('.nav-links');
+
+    toggleButton.addEventListener('click', () => {
+      navLinks.classList.toggle('show');
+    });
+  </script>
+</body>
+</html>

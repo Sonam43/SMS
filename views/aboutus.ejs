@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Sherubtse Media Society</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+
+  <link rel="stylesheet" href="/css/aboutus.css">
+</head>
+
+<body>
+  <!-- Header -->
+  <header>
+    <div class="logo-container">
+      <img src="/images/logo1.png" alt="Sherubtse Media Society Logo" class="logo-img">
+      <h1 class="site-title">Sherubtse Media Society</h1>
+    </div>
+    <button class="menu-toggle" aria-label="Toggle navigation">☰</button>
+    <nav class="nav-links">
+      <a href="/home">Home</a>
+      <a href="/aboutus">About Us</a>
+      <a href="/membership">Membership</a>
+      <a href="/news">News</a>
+      <a href="/contactus">Contact Us</a>
+      <a href="/logout" class="logout">Logout</a> 
+    </nav>
+  </header>
+
+  <section class="vm-section">
+    <div class="container">
+      <div class="vision-box">
+        <h2>Vision</h2>
+        <p>To stand as a quality media body that reflects and presents the standards of Sherubtse College.</p>
+      </div>
+
+      <div class="logo-mission-section">
+        <div class="logos">
+          <img src="/images/logo1.png" alt="Sherubtse Media Society Logo" class="logo-main">
+        </div>
+        <div class="mission-box">
+          <h2>Mission</h2>
+          <p>To serve as the primary media body of Sherubtse, capturing all activities within Sherubtse in the form of
+            pictures, words, and sound, for both the college community and the outside world.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="photos-section">
+    <h2><img src="/images/logo1.png" alt="Photos Icon">PHOTOS</h2>
+    <p>Sherubtse College, nestled in Bhutan's mountains, symbolizes academic excellence, cultural heritage, and
+      tranquility.</p>
+  </section>
+
+  <div class="photo-section">
+    <% images.forEach(image=> { %>
+      <img src="<%= image.image_url %>" alt="Gallery Photo" />
+      <% }); %>
+  </div>
+
+
+  <footer class="footer">
+  <div class="footer-container">
+    <!-- Contact Us -->
+    <div class="footer-column contact">
+      <h4>Contact Us</h4>
+      <p>Visit us at Sherubtse College, Bhutan</p>
+      <p>Email:</p>
+      <p>Phone: +975-17123456</p>
+    </div>
+
+    <!-- Follow Us -->
+    <div class="footer-column follow">
+      <h4>Follow Us</h4>
+      <a href="https://www.facebook.com/SherubtseMediaSociety" target="_blank">
+        <img src="/Images/facebook.png" alt="Facebook" class="social-icon">
+      </a>
+      <a href="https://www.tiktok.com/@smsuo875677?lang=en" target="_blank">
+        <img src="/Images/tiktok.png" alt="TikTok" class="social-icon">
+      </a>
+      <a href="https://www.youtube.com/@SherubtseMediaSociety" target="_blank">
+        <img src="/Images/youtube.png" alt="YouTube" class="social-icon youtube-icon">
+      </a>
+    </div>
+
+    <!-- Quick Links -->
+    <div class="footer-column links">
+      <h4>Quick Links</h4>
+      <p><a href="/aboutus">About Us</a></p>
+      <p><a href="#">SMS Constitution</a></p>
+      <p><a href="#">News</a></p>
+    </div>
+  </div>
+
+  <div class="footer-bottom">
+    © 2024 Sherubtse Media Society. All rights reserved.
+  </div>
+</footer>
+
+  <script>
+    const toggleButton = document.querySelector('.menu-toggle');
+    const navLinks = document.querySelector('.nav-links');
+
+    toggleButton.addEventListener('click', () => {
+      navLinks.classList.toggle('show');
+    });
+  </script>
+</body>
+
+</html>

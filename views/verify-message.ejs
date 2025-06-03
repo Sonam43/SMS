@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Verify Your Email</title>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Roboto', sans-serif;
+        }
+
+        body {
+            background: url('/images/Banner.jpg') no-repeat center center fixed;
+            background-size: cover;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: linear-gradient(135deg);
+            padding: 20px;
+        }
+
+
+        .container {
+            background: white;
+            padding: 40px;
+            border-radius: 12px;
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
+            width: 100%;
+            max-width: 400px;
+            text-align: center;
+        }
+
+        .email-icon {
+            width: 80px;
+            height: 80px;
+            background: #667eea;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 24px;
+        }
+
+        .email-icon svg {
+            width: 40px;
+            height: 40px;
+            fill: white;
+        }
+
+        h1 {
+            color: #333;
+            margin-bottom: 16px;
+            font-weight: 500;
+        }
+
+        p {
+            color: #666;
+            line-height: 1.6;
+            font-size: 15px;
+            margin-bottom: 24px;
+        }
+
+        .resend-link {
+            color: #667eea;
+            text-decoration: none;
+            font-size: 14px;
+            display: inline-block;
+            margin-top: 16px;
+            transition: color 0.2s ease;
+        }
+
+        .resend-link:hover {
+            color: #5a6fd6;
+        }
+
+        .timer {
+            color: #888;
+            font-size: 14px;
+            margin-top: 8px;
+        }
+
+        @media (max-width: 480px) {
+            .container {
+                padding: 30px 20px;
+            }
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .container > * {
+            animation: fadeIn 0.6s ease forwards;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="email-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+                <path d="M20 4H4c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z"/>
+            </svg>
+        </div>
+        <h1>Check Your Email</h1>
+        <p>We've sent you a verification link. Please check your inbox and click the link to activate your account.</p>
+        <p>If you don't see the email, check your spam folder.</p>
+        
+    </div>
+
+    <script>
+        let countdown = 60;
+        let timer = null;
+
+        function handleResend(e) {
+            e.preventDefault();
+            const resendLink = document.getElementById('resend-link');
+            const timerElement = document.getElementById('timer');
+            const countdownElement = document.getElementById('countdown');
+
+            resendLink.style.display = 'none';
+            timerElement.style.display = 'block';
+            
+            timer = setInterval(() => {
+                countdown--;
+                countdownElement.textContent = countdown;
+                
+                if (countdown <= 0) {
+                    clearInterval(timer);
+                    resendLink.style.display = 'inline-block';
+                    timerElement.style.display = 'none';
+                    countdown = 60;
+                }
+            }, 1000);
+
+            // Here you would typically make an API call to resend the verification email
+        }
+    </script>
+</body>
+</html>

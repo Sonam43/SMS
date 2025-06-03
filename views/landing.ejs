@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Sherubtse Media Society</title>
+  <link rel="stylesheet" href="/css/landing.css">
+</head>
+<body>
+  <!-- Header -->
+  <header class="header">
+    <div class="logo">
+      <img src="/images/logo1.png" alt="Sherubtse Media Society Logo">
+      <span>Sherubtse Media Society</span>
+    </div>
+    <div class="auth-buttons">
+      <a href="/login" class="login-btn">Login</a>
+      <a href="/signup" class="signup-btn">Sign Up</a>
+    </div>
+  </header>
+
+  <!-- Welcome Section -->
+  <div class="hero-section">
+    <h1>WELCOME TO SHERUBTSE MEDIA SOCIETY</h1>
+  </div>
+
+  <!-- Purpose Section -->
+  <section class="purpose">
+    <h2>Purpose</h2>
+    <p>The purpose of Sherubtse Media Society (SMS) is to manage, archive, and promote creative media, enhance event coverage, and engage members.</p>
+    <img src="/images/purpose.png" alt="SMS Logo" class="purpose-logo">
+  </section>
+
+  <!-- Activities Section -->
+  <section class="activities">
+    <h2>Our Media Activities</h2>
+    <div class="cards">
+      <div class="card">
+        <img src="/images/media1.jpg" alt="Photography">
+        <h3>Photography</h3>
+        <p>Capturing moments and telling stories through images.</p>
+      </div>
+      <div class="card">
+        <img src="/images/media2.jpg" alt="Videography">
+        <h3>Videography</h3>
+        <p>Creating engaging and informative video content.</p>
+      </div>
+      <div class="card">
+        <img src="/images/media3.webp" alt="Journalism">
+        <h3>Journalism</h3>
+        <p>Reporting news and events with accuracy and integrity.</p>
+      </div>
+      <div class="card">
+        <img src="/images/Photography.png" alt="Event Coverage">
+        <h3>Event Coverage</h3>
+        <p>Documenting college events and programs.</p>
+      </div>
+    </div>
+  </section>
+
+
+   <!-- Wave Background Section -->
+ <div class="section-top">
+  <div class="wave">
+    <svg viewBox="0 0 1440 320" preserveAspectRatio="none">
+      <path fill="#ffffff" 
+            d="M0,160L60,149.3C120,139,240,117,360,106.7C480,96,600,96,720,106.7C840,117,960,139,1080,138.7C1200,139,1320,117,1380,106.7L1440,96L1440,0L1380,0C1320,0,1200,0,1080,0C960,0,840,0,720,0C600,0,480,0,360,0C240,0,120,0,60,0L0,0Z">
+      </path>
+    </svg>
+  </div>
+</div>
+
+
+    
+  <!-- Stats Section -->
+  <section class="stats">
+  <img src="/images/groupphoto.jpeg" alt="Group Photo">
+  <div class="counters">
+    <div><strong class="count" data-target="190">0</strong><br>Students</div>
+    <div><strong class="count" data-target="6">0</strong><br>Coordinators</div>
+    <div><strong class="count" data-target="2">0</strong><br>Secretary</div>
+  </div>
+</section>
+
+</div>
+
+  <footer class="footer">
+  <div class="footer-container">
+    <!-- Contact Us -->
+    <div class="footer-column contact">
+      <h4>Contact Us</h4>
+      <p>Visit us at Sherubtse College, Bhutan</p>
+      <p>Email:</p>
+      <p>Phone: +975-17123456</p>
+    </div>
+
+    <!-- Follow Us -->
+    <div class="footer-column follow">
+      <h4>Follow Us</h4>
+      <a href="https://www.facebook.com/SherubtseMediaSociety" target="_blank">
+        <img src="/Images/facebook.png" alt="Facebook" class="social-icon">
+      </a>
+      <a href="https://www.tiktok.com/@smsuo875677?lang=en" target="_blank">
+        <img src="/Images/tiktok.png" alt="TikTok" class="social-icon">
+      </a>
+      <a href="https://www.youtube.com/@SherubtseMediaSociety" target="_blank">
+        <img src="/Images/youtube.png" alt="YouTube" class="social-icon youtube-icon">
+      </a>
+    </div>
+
+    <!-- Quick Links -->
+    <div class="footer-column links">
+      <h4>Quick Links</h4>
+      <p><a href="/aboutus">About Us</a></p>
+      <p><a href="#">SMS Constitution</a></p>
+      <p><a href="#">News</a></p>
+    </div>
+  </div>
+
+  <div class="footer-bottom">
+    © 2024 Sherubtse Media Society. All rights reserved.
+  </div>
+</footer>
+
+
+
+
+<script>
+  document.addEventListener("DOMContentLoaded", () => {
+    const counters = document.querySelectorAll(".count");
+
+    const animateCount = (counter, duration = 1000) => {
+      const target = +counter.getAttribute("data-target");
+      const start = 0;
+      const startTime = performance.now();
+
+      const update = (currentTime) => {
+        const elapsed = currentTime - startTime;
+        const progress = Math.min(elapsed / duration, 1);
+        const value = Math.floor(progress * target);
+        counter.textContent = value;
+
+        if (progress < 1) {
+          requestAnimationFrame(update);
+        } else {
+          counter.textContent = target; // Ensure it ends exactly
+        }
+      };
+
+      requestAnimationFrame(update);
+    };
+
+    const observer = new IntersectionObserver((entries, obs) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          animateCount(entry.target, 2000); // 👈 You can adjust duration here (in ms)
+          obs.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.5 });
+
+    counters.forEach(counter => {
+      observer.observe(counter);
+    });
+  });
+</script>
+
+
+
+
+</body>
+</html>

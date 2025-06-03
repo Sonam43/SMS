@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Admin News | Sherubtse Media Society</title>
+  <link rel="stylesheet" href="/css/adminnews.css" />
+</head>
+<body>
+  <div class="sidebar">
+    <div>
+      <div class="brand">
+        <img src="/images/logo1.png" alt="Logo" class="logo" />
+        <h2>Sherubtse<br/>Media Society</h2>
+      </div>
+      <h1>Admin Panel</h1>
+      <nav>
+        <ul>
+          <li><a href="/adminnews" class="active">News</a></li>
+          <li><a href="/admingallery">Gallery</a></li>
+          <li><a href="/adminfeedback">Feedback</a></li>
+          <li><a href="/adminmembership">Membership</a></li>
+          
+        </ul>
+      </nav>
+    </div>
+    <a href="/admindashboard" class="logout-btn">Admin Dashboard</a>
+  </div>
+
+  <div class="main-content">
+    <div class="header">
+      <h2>News Management</h2>
+      <button class="add-btn" onclick="openForm()">+ Add News</button>
+    </div>
+
+    <div class="news-grid">
+      <% newsList.forEach(news => { %>
+        <div class="news-card">
+          <% if (news.imageUrl) { %>
+            <img src="<%= news.imageUrl %>" alt="News Image">
+          <% } %>
+          <h3><%= news.title %></h3>
+          <p><%= news.content %></p>
+          <small><%= new Date(news.date).toLocaleDateString() %></small>
+          <div class="btn-group">
+            <button onclick='editNews(<%- JSON.stringify(news) %>)'>Edit</button>
+            <form action="/news/delete/<%= news.id %>" method="POST">
+              <button type="submit" onclick="return confirm('Delete this news?')">Delete</button>
+            </form>
+          </div>
+        </div>
+      <% }) %>
+    </div>
+  </div>
+
+  <!-- Modal -->
+  <div class="modal" id="newsModal" style="display: none;">
+    <div class="modal-content">
+      <h2 id="formTitle">Add News</h2>
+      <form id="newsForm" action="/news/add" method="POST" enctype="multipart/form-data">
+        <input type="hidden" name="id" id="newsId">
+        <input type="text" name="title" id="newsTitle" placeholder="Title" required>
+        <input type="date" name="date" id="newsDate" required>
+        <textarea name="content" id="newsContent" placeholder="News content" required></textarea>
+        <input type="file" name="image" accept="image/*">
+        <div class="btn-group">
+          <button type="submit">Save</button>
+          <button type="button" onclick="closeForm()">Cancel</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <script>
+    function openForm() {
+      document.getElementById('newsForm').reset();
+      document.getElementById('newsId').value = '';
+      document.getElementById('formTitle').innerText = 'Add News';
+      document.getElementById('newsModal').style.display = 'flex';
+    }
+
+    function editNews(news) {
+      document.getElementById('newsId').value = news.id;
+      document.getElementById('newsTitle').value = news.title;
+      document.getElementById('newsDate').value = news.date.split('T')[0];
+      document.getElementById('newsContent').value = news.content;
+      document.getElementById('formTitle').innerText = 'Edit News';
+      document.getElementById('newsModal').style.display = 'flex';
+    }
+
+    function closeForm() {
+      document.getElementById('newsModal').style.display = 'none';
+    }
+  </script>
+</body>
+</html>

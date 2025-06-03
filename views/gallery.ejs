@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Admin Gallery | Sherubtse Media Society</title>
+  <link rel="stylesheet" href="/css/admin-gallery.css" />
+</head>
+<body>
+  <div class="sidebar">
+    <div>
+      <div class="brand">
+        <img src="/images/logo1.png" alt="Logo" class="logo" />
+        <h2>Sherubtse<br/>Media Society</h2>
+      </div>
+      <h1>Admin Panel</h1>
+      <nav>
+        <ul>
+          <li><a href="/adminnews">News</a></li>
+          <li><a href="/admingallery" class="active">Gallery</a></li>
+          <li><a href="/adminfeedback">Feedback</a></li>
+          <li><a href="/adminmembership">Membership</a></li>
+        </ul>
+      </nav>
+    </div>
+    <a href="/admindashboard" class="logout-btn">Admin Dashboard</a>
+  </div>
+
+  <div class="main-content">
+    <div class="gallery-header">
+      <h2>Gallery</h2>
+      <button id="add-image-btn" class="add-btn">Add Image</button>
+    </div>
+
+    <div class="gallery-grid">
+      <% if (images && images.length > 0) { %>
+        <% images.forEach(image => { %>
+          <div class="gallery-item">
+            <img src="<%= image.image_url %>" alt="Gallery Image" />
+            <form action="/gallery/delete/<%= image.id %>" method="POST">
+              <button type="submit" onclick="return confirm('Delete this Photo?')" class="delete-btn">Delete</button>
+            </form>
+          </div>
+        <% }); %>
+      <% } else { %>
+        <p>No images uploaded yet.</p>
+      <% } %>
+    </div>
+  </div>
+
+  <!-- Upload Form Modal -->
+  <div id="image-upload-form" class="upload-form-overlay" style="display: none;">
+    <form action="/upload-image" method="POST" enctype="multipart/form-data" class="upload-form">
+      <h2>Upload New Image</h2>
+      <input type="file" name="image" accept="image/*" required />
+      <div class="form-buttons">
+        <button type="submit" class="btn upload">Upload</button>
+        <button type="button" id="cancel-btn" class="btn cancel">Cancel</button>
+      </div>
+    </form>
+  </div>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      const addBtn = document.getElementById('add-image-btn');
+      const uploadForm = document.getElementById('image-upload-form');
+      const cancelBtn = document.getElementById('cancel-btn');
+
+      addBtn.addEventListener('click', () => {
+        uploadForm.style.display = 'flex';
+      });
+
+      cancelBtn.addEventListener('click', () => {
+        uploadForm.style.display = 'none';
+      });
+    });
+  </script>
+</body>
+</html>

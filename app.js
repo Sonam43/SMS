@@ -9,7 +9,7 @@ const Gallery = require('./models/gallery');
 const upload = require('./middleware/upload');
 
 // ======== Initialize Express App ========
-const app = express();
+const app = express();  
 
 // ======== Session Store ========
 const sessionStore = new SequelizeStore({
@@ -124,3 +124,4 @@ sessionStore
   .catch((error) => {
     console.error("❌ Error syncing the database or session store:", error);
   });
+    
